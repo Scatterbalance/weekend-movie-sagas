@@ -1,9 +1,21 @@
-import {HashRouter as Router, Route} from 'react-router-dom';
+import {HashRouter as Router, Route, useParams} from 'react-router-dom';
 import './App.css';
 import MovieList from '../MovieList/MovieList'
 import Details from '../Details/Details';
+import AddMovie from '../AddMovie/AddMovie';
+import React, {useEffect} from 'react';
+import { useDispatch } from 'react-redux';
+
+
 
 function App() {
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    dispatch({ type: 'FETCH_GENRES' });
+  }, []);
+
   return (
     <div className="App">
       <h1>The Movies Saga!</h1>
@@ -13,6 +25,9 @@ function App() {
         </Route>
         <Route path="/details" exact>
           <Details />
+        </Route>
+        <Route path="/AddMovie" exact>
+            <AddMovie />
         </Route>
         
 
