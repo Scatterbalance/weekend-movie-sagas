@@ -20,7 +20,7 @@ function MovieList() {
                     return (
                         <div key={movie.id} >
                             <h3>{movie.title}</h3>
-                            <Link to= "/Details" >
+                            <Link to= "/Details" onClick = {()=>dispatch({type:'FETCH_DETAILS', payload: movie.id})}>
                             <img src={movie.poster} alt={movie.title}/>
                             </Link>
                         </div>
