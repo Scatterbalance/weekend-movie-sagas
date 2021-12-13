@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'; 
-import {Button, Box, MenuItem, InputLabel, FormControl, Select} from '@material-ui/core';
+import {Button, Box, MenuItem, InputLabel, FormControl, Select, Grid} from '@material-ui/core';
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
 
 function AddMovie( props ){
@@ -43,6 +44,8 @@ const genres = useSelector( store => store.genres );
         setnewMovie({...newMovie, genre_id: event.target.value})
         
     };
+   
+    
 
     const [genreList, setgenreList] = useState('');
 
@@ -54,27 +57,50 @@ const genres = useSelector( store => store.genres );
 
     return(
         <div>
-            <h1>AddMovie</h1>
-            <input type = "text" placeholder = "Title" onChange = { (event)=>handleChangeTitle(event)} />
-            <input type = "text" placeholder = "Poster url" onChange = { (event)=>handleChangePoster(event)} />
-            <input type = "text" placeholder = "Description" onChange = { (event)=>handleChangeDescription(event)} />
-            
-       
-            
+          <h1>AddMovie</h1>
+          <Box sx={{ flexGrow: 1 }}>
+            <Grid container spacing={3}>
+            <Grid item xs={12}>
 
-      <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Genre</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          label="Genre"
-          value = {newMovie.genre_id}
-          onChange={handleChange}>
-            {genreList}
-        </Select>
-      </FormControl>
-    </Box>
+            <h4>Title: <input type = "text" placeholder = "Title" onChange = { (event)=>handleChangeTitle(event)} /></h4>
+            <h4>Poster URL: <input type = "text" placeholder = "Poster url" onChange = { (event)=>handleChangePoster(event)} /></h4>
+            <h4>Description: <input type = "text" placeholder = "Description" onChange = { (event)=>handleChangeDescription(event)} /></h4>
+            </Grid>
+
+            <Grid item xs={5}>
+            </Grid>
+            <Grid item xs={2}>
+              
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Genre</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Genre"
+              value = {newMovie.genre_id}
+              onChange={handleChange}>
+                {genreList}
+            </Select>
+          </FormControl>
+          </Grid>
+          
+          <Grid item xs={12}>
+          <Button component={RouterLink} to="/" variant="outlined">Cancel</Button>
+          </Grid>
+          <Grid item xs={12}>
+        
+          <Button  
+          component={RouterLink} to="/"
+          onClick = {()=>{dispatch({type:'SEND_MOVIE', payload: newMovie})}}
+          variant="outlined">Submit</Button>
+         
+
+          
+          </Grid>
+          </Grid>
+        </Box>
+        
+       
 
         </div>
     )
