@@ -8,30 +8,48 @@ import { Provider } from 'react-redux';
 import logger from 'redux-logger';
 // Import saga middleware
 import createSagaMiddleware from 'redux-saga';
-import { takeEvery, put } from 'redux-saga/effects';
+import { takeEvery, put} from 'redux-saga/effects';
 import axios from 'axios';
+
 
 // Create the rootSaga generator function
 function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchAllMovies);
     yield takeEvery('FETCH_GENRES', fetchAllGenres);
     yield takeEvery('FETCH_DETAILS', fetchDetails);
+    yield takeEvery('FETCH_DETAILS', fetchMovie);
+
+
 }
 
 function* fetchDetails(action) {
-    // get details from the DB for dropdown
+    // get details from the DB
     try {
-        
-        const detail = yield axios.get(`/api/movie_genre/`, {params: {id:action.payload}});
+        const detail = yield axios.get(`/api/movie/${action.payload.movie.id}`);
         console.log('get all details:', detail.data);
         yield put({ type: 'SET_DETAILS', payload: detail.data });
-        
-
+       
     } catch {
         console.log('get details error');
     }
         
 }
+
+function* fetchMovie(action) {
+    // get details from the DB
+    try {
+        const movie = yield axios.get(`/api/movie/details/${action.payload.movie.id}`);
+        console.log('get movie details:', movie.data);
+        yield put({ type: 'SET_MOVIE', payload: movie.data });
+       
+    } catch {
+        console.log('get details error');
+    }
+        
+}
+
+
+
 
 function* fetchAllGenres() {
     // get all Genres from the DB for dropdown
@@ -76,6 +94,8 @@ const details = (state = [], action) => {
 const movies = (state = [], action) => {
     switch (action.type) {
         case 'SET_MOVIES':
+            return action.payload;
+            case 'SET_MOVIE':
             return action.payload;
         default:
             return state;

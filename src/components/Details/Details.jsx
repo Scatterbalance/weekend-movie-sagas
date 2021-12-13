@@ -1,26 +1,52 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'; 
+import { Link } from 'react-router-dom';
 
 function Details( props ){
+
+
    const details = useSelector( store => store.details );
+   const movies = useSelector( store => store.movies );
     // const [name, setName] = useState( null );
 
+
+
     const dispatch = useDispatch();
+   
+
+        
+    
+
+   
 
     return(
         <div>
             <h1>Details</h1>
-            <img src={details[0].poster} alt={details[0].title}/>
+            <Link to = '/'>
+            <button>Back to home</button>
+            </Link>
+            <section> 
+    
+            
+            <img src={movies[0].poster} alt={movies.title}/>
 
-            <p>Name: {details[0].title}</p>
-            <p>Description: {details[0].description}</p>
-            <p>Genre: {details.map(detail =>{
+            <h1>{movies[0].title}</h1>
+            <p>Description: {movies[0].description}</p>
+            </section>
+            <div>
+
+                <p>
+                    Genre:
+                     {details.map(detail =>{
                 return (
-                    <div key = {detail.id}>
-                    <li>{detail.name}</li>
-                    </div>
+                    <li key = {detail.id}>{detail.name}</li>
+                    
                 )
             })}</p>
+
+           
+            </div>
 
         </div>
     )

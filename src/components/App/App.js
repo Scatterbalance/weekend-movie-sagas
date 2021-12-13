@@ -14,6 +14,7 @@ function App() {
 
   useEffect(() => {
     dispatch({ type: 'FETCH_GENRES' });
+    
   }, []);
 
   return (

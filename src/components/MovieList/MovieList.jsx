@@ -12,16 +12,20 @@ function MovieList() {
         dispatch({ type: 'FETCH_MOVIES' });
     }, []);
 
+    
+
     return (
-        <main>
+        <main> 
             <h1>MovieList</h1> 
+            <Link to = "/AddMovie"><button>Add Movie</button></Link>
             <section className="movies">
                 {movies.map(movie => {
                     return (
                         <div key={movie.id} >
                             <h3>{movie.title}</h3>
-                            <Link to= "/Details" onClick = {()=>dispatch({type:'FETCH_DETAILS', payload: movie.id})}>
-                            <img src={movie.poster} alt={movie.title}/>
+                            
+                            <Link to= "/Details" onClick = {()=>{dispatch({type:'FETCH_DETAILS', payload: {movie}})}}>
+                            <img  src={movie.poster} alt={movie.title}/>
                             </Link>
                         </div>
                     );
